@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bicol Weather Archive – Naga City & Milaor</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+<header>
+  <h1>🌦️ Bicol Weather Archive</h1>
+  <p class="sub">Naga City &amp; Milaor, Camarines Sur · times in Philippine Time (UTC+8)</p>
+</header>
+<div class="layout">
+<main>
+  <section class="panel">
+    <div class="controls">
+      <label>Location<select id="loc"></select></label>
+      <label>Month<select id="month"></select></label>
+      <label>Year<select id="year"></select></label>
+      <label>Date<select id="day"></select></label>
+      <label>Time<select id="time"></select></label>
+      <label>&nbsp;<button id="csvBtn" class="alt">Download month CSV</button></label>
+    </div>
+    <p id="status" class="sub"></p>
+  </section>
+  <h2 id="stamp"></h2>
+  <section id="cards" class="cards"></section>
+  <section class="charts panel">
+    <canvas id="cTemp"></canvas>
+    <canvas id="cRain"></canvas>
+    <canvas id="cHW"></canvas>
+  </section>
+</main>
+<aside>
+  <section class="panel">
+    <h3>⏱️ Auto-record schedule</h3>
+    <p class="sub">Pick days and times (24-hour, Philippine Time). Records current conditions.</p>
+    <label>Days</label><div id="days" class="controls"></div>
+    <label>Times (HH:MM, comma-separated)<input id="times"></label>
+    <label>Locations</label><div id="locs" class="controls"></div>
+    <div class="controls" style="margin-top:10px">
+      <button id="saveBtn">Save schedule</button>
+      <button id="nowBtn" class="alt">Record now</button>
+    </div>
+    <p id="msg" class="sub"></p>
+    <details><summary>Schedule for GitHub Actions (24/7 recording)</summary>
+      <p class="sub">Copy this into <code>schedule.json</code> in your repo. The browser records only while this page is open; GitHub Actions records even when it is closed.</p>
+      <textarea id="json" rows="7" style="width:100%" readonly></textarea>
+    </details>
+  </section>
+  <section class="panel">
+    <h3>📒 Recorded data</h3>
+    <div class="controls"><button id="recCsv" class="alt">Download CSV</button><button id="recClr" class="alt">Clear browser records</button></div>
+    <div class="scroll"><table id="recs"></table></div>
+  </section>
+</aside>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
