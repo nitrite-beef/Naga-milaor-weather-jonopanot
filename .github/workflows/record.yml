@@ -1,0 +1,29 @@
+name: Record weather
+on:
+  schedule:
+    - cron: '5 * * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Record now, ignoring the schedule'
+        type: boolean
+        default: false
+permissions:
+  contents: write
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/record.mjs
+        env:
+          FORCE: ${{ inputs.force && '1' || '' }}
+      - name: Commit new records
+        run: |
+          git config user.name "weather-bot"
+          git config user.email "weather-bot@users.noreply.github.com"
+          git add data/records.json
+          git diff --cached --quiet || (git commit -m "Record weather" && git push)
